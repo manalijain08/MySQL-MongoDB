@@ -1,0 +1,125 @@
+Q-1:
+mysql> create table employee as
+    -> select id 'emp_id',
+    -> first_name 'Name',
+    -> salary 'Basic_sal'
+    -> from my_employee;
+Query OK, 4 rows affected, 1 warning (0.06 sec)
+Records: 4  Duplicates: 0  Warnings: 1
+
+Q-2:
+mysql> desc employee;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| emp_id    | int         | NO   |     | 0       |       |
+| Name      | varchar(25) | YES  |     | NULL    |       |
+| Basic_sal | float(9,2)  | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+Q-3:
+mysql> alter table employee modify column name varchar(5);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Q-4:
+mysql> update employee set basic_sal=Null where emp_id=emp_id%2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+Q-5:
+mysql> alter table employee change basic_sal salary bigint not null;
+ERROR 1265 (01000): Data truncated for column 'salary' at row 1
+
+Q-6:
+mysql> desc employee;
++-----------+------------+------+-----+---------+-------+
+| Field     | Type       | Null | Key | Default | Extra |
++-----------+------------+------+-----+---------+-------+
+| emp_id    | int        | NO   |     | 0       |       |
+| name      | varchar(5) | YES  |     | NULL    |       |
+| Basic_sal | float(9,2) | YES  |     | NULL    |       |
++-----------+------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+Q-7:
+mysql> alter table employee change basic_sal salary bigint;
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+Q-8:
+mysql> alter table employee add column email_id varchar(20) not null;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| emp_id   | int         | NO   |     | 0       |       |
+| name     | varchar(5)  | YES  |     | NULL    |       |
+| salary   | bigint      | YES  |     | NULL    |       |
+| email_id | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+Q-9:
+mysql> insert into employee values(6,'Mani',800,null);
+ERROR 1048 (23000): Column 'email_id' cannot be null
+
+Q-10:
+mysql> alter table employee drop email_id;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++--------+------------+------+-----+---------+-------+
+| Field  | Type       | Null | Key | Default | Extra |
++--------+------------+------+-----+---------+-------+
+| emp_id | int        | NO   |     | 0       |       |
+| name   | varchar(5) | YES  |     | NULL    |       |
+| salary | bigint     | YES  |     | NULL    |       |
++--------+------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+Q-11:
+mysql> alter table employee rename to my_emp2;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from my_emp2;
++--------+-------+--------+
+| emp_id | name  | salary |
++--------+-------+--------+
+|      1 | Ralph |   NULL |
+|      3 | Ben   |   1100 |
+|      4 | Chad  |   1000 |
+|      5 | Audry |   1550 |
++--------+-------+--------+
+4 rows in set (0.00 sec)
+
+Q-12:
+mysql> drop table my_emp2;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_pubs |
++----------------+
+| authors        |
+| departments    |
+| employees      |
+| my_employee    |
+| publishers     |
+| salgrades      |
+| titleauthor    |
+| titles         |
++----------------+
+8 rows in set (0.01 sec)
+
+Q-13:
+mysql> drop table my_emp2;
+ERROR 1051 (42S02): Unknown table 'pubs.my_emp2'
+
+mysql> drop table if exists my_emp2;
+Query OK, 0 rows affected, 1 warning (0.00 sec)

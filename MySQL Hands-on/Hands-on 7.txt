@@ -1,0 +1,158 @@
+Q-1:
+mysql> create table MY_EMPLOYEE(id int(4) primary key auto_increment,
+    -> last_name varchar(25),
+    -> first_name varchar(25),
+    -> userid varchar(8),
+    -> salary float(9,2));
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+Q-2:
+mysql> desc My_employee;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int         | NO   | PRI | NULL    | auto_increment |
+| last_name  | varchar(25) | YES  |     | NULL    |                |
+| first_name | varchar(25) | YES  |     | NULL    |                |
+| userid     | varchar(8)  | YES  |     | NULL    |                |
+| salary     | float(9,2)  | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+Q-3:
+mysql> insert into my_employee values(1,'Patel','Ralph','rpatel',795);
+Query OK, 1 row affected (0.00 sec)
+
+Q-4:
+mysql> insert into my_employee(id,last_name,first_name,userid,salary)
+    -> values(2,'Dancs','Betty','bdancs',860);
+Query OK, 1 row affected (0.01 sec)
+
+Q-5:
+mysql> select * from employees;
++--------+----------+---------+-----------+--------+------------+
+| emp_id | ename    | dept_id | job       | mgr_id | bsal       |
++--------+----------+---------+-----------+--------+------------+
+|    101 | Sameer   |      10 | President |   NULL | 50000.0000 |
+|    102 | Srinivas |      10 | VP        |    101 | 40000.0000 |
+|    103 | Nanda    |      20 | VP        |    101 | 40000.0000 |
+|    104 | Ram      |      30 | DGM       |    102 | 35000.0000 |
+|    105 | Vivek    |      20 | PM        |    103 | 30000.0000 |
+|    106 | Venkat   |      20 | Tech Lead |    105 | 25000.0000 |
++--------+----------+---------+-----------+--------+------------+
+6 rows in set (0.01 sec)
+
+Q-6,7:
+mysql> \. C:\Users\manali.jain\Desktop\loademp.sql
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+Q-8:
+mysql> select * from my_employee;
++----+-----------+------------+-----------+---------+
+| id | last_name | first_name | userid    | salary  |
++----+-----------+------------+-----------+---------+
+|  1 | Patel     | Ralph      | rpatel    |  795.00 |
+|  2 | Dancs     | Betty      | bdancs    |  860.00 |
+|  3 | Biri      | Ben        | bbiri     | 1100.00 |
+|  4 | Newman    | Chad       | cnewmane  |  750.00 |
+|  5 | Ropeburn  | Audry      | aropeburn | 1550.00 |
++----+-----------+------------+-----------+---------+
+5 rows in set (0.00 sec)
+
+Q-10:
+mysql> set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update my_employee set last_name='Dexter' where id=3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+Q-11:
+mysql> update my_employee set salary=1000 where salary<900;
+Query OK, 3 rows affected (0.00 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+Q-12:
+mysql> select * from my_employee;
++----+-----------+------------+-----------+---------+
+| id | last_name | first_name | userid    | salary  |
++----+-----------+------------+-----------+---------+
+|  1 | Patel     | Ralph      | rpatel    | 1000.00 |
+|  2 | Dancs     | Betty      | bdancs    | 1000.00 |
+|  3 | Dexter    | Ben        | bbiri     | 1100.00 |
+|  4 | Newman    | Chad       | cnewmane  | 1000.00 |
+|  5 | Ropeburn  | Audry      | aropeburn | 1550.00 |
++----+-----------+------------+-----------+---------+
+5 rows in set (0.00 sec)
+
+Q-13:
+mysql> delete from my_employee where id=2;
+Query OK, 1 row affected (0.00 sec)
+
+Q-14:
+mysql> select * from my_employee;
++----+-----------+------------+-----------+---------+
+| id | last_name | first_name | userid    | salary  |
++----+-----------+------------+-----------+---------+
+|  1 | Patel     | Ralph      | rpatel    | 1000.00 |
+|  3 | Dexter    | Ben        | bbiri     | 1100.00 |
+|  4 | Newman    | Chad       | cnewmane  | 1000.00 |
+|  5 | Ropeburn  | Audry      | aropeburn | 1550.00 |
++----+-----------+------------+-----------+---------+
+4 rows in set (0.00 sec)
+
+Q-15:
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+Q-16:
+mysql> \. C:\Users\manali.jain\Desktop\loademp.sql
+ERROR 1062 (23000): Duplicate entry '3' for key 'my_employee.PRIMARY'
+
+Q-17:
+mysql> select * from my_employee;
++----+-----------+------------+-----------+---------+
+| id | last_name | first_name | userid    | salary  |
++----+-----------+------------+-----------+---------+
+|  1 | Patel     | Ralph      | rpatel    | 1000.00 |
+|  3 | Dexter    | Ben        | bbiri     | 1100.00 |
+|  4 | Newman    | Chad       | cnewmane  | 1000.00 |
+|  5 | Ropeburn  | Audry      | aropeburn | 1550.00 |
++----+-----------+------------+-----------+---------+
+4 rows in set (0.00 sec)
+
+Q-18:
+mysql> SAVEPOINT MYSAVPOINT1;
+Query OK, 0 rows affected (0.00 sec)
+
+Q-19:
+mysql> delete from my_employee;
+Query OK, 4 rows affected (0.00 sec)
+
+Q-20:
+mysql> select * from my_employee;
+Empty set (0.00 sec)
+
+Q-21:
+mysql>  ROLLBACK TO SAVEPOINT MYSAVPOINT1;
+Query OK, 0 rows affected (0.00 sec)
+
+Q-22:
+mysql> select * from my_employee;
++----+-----------+------------+-----------+---------+
+| id | last_name | first_name | userid    | salary  |
++----+-----------+------------+-----------+---------+
+|  1 | Patel     | Ralph      | rpatel    | 1000.00 |
+|  3 | Dexter    | Ben        | bbiri     | 1100.00 |
+|  4 | Newman    | Chad       | cnewmane  | 1000.00 |
+|  5 | Ropeburn  | Audry      | aropeburn | 1550.00 |
++----+-----------+------------+-----------+---------+
+4 rows in set (0.00 sec)
+
+Q-23:
+mysql> set autocommit=1;
+Query OK, 0 rows affected (0.00 sec)
